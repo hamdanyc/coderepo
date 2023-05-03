@@ -2,12 +2,12 @@
 # usage: mark dept header from dept list on match dept::keyword
 # marke ref to para ie. para 2.2.1
 
-@include "min_lib.awk"
+@include "/home/abi/Documents/minit_mesyuarat_wp/code/min_lib.awk"
 # "fo hr fb kitchen steward security purchase maint aset it hk sales finance gm control"
 BEGIN {
  dept[1] = "front office"; dept[2] = "hr"; dept[3] = "f&b"; dept[4] = "kitchen"; dept[5] = "steward"
  dept[6] = "security"; dept[7] = "purchasing"; dept[8] = "maintenance"; dept[9] = "asset"; dept[10] = "\bit\b"
- dept[11] = "house keeping"; dept[12] = "sales"; dept[13] = "finance"; dept[14] = "gm"; dept[15] = "pengurus"
+ dept[11] = "housekeeping"; dept[12] = "sales"; dept[13] = "finance"; dept[14] = "gm"; dept[15] = "pengurus"
  i = 0
  IGNORECASE = 1
  print "Dept#",toupper(dept[1])
@@ -18,8 +18,9 @@ BEGIN {
    {
      for (i = 1; i < 16; i++)
        if ($0 ~ dept[i]) print "\nDept#",toupper(dept[i])
+       if ($0 ~ /Cef/) print "\nDept#",toupper(dept[4])
    }
-   print $0
+   if ($0 != "") print $0
    {
 
   for (i = 1; i <= NF; i++)
