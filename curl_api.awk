@@ -22,11 +22,6 @@ END {
    #echo $(echo $result | jq -r '.choices[0].text')
 }
 
-#END {
-#  cmd = "curl -X POST -H 'Content-Type: application/json' -H 'Authorization: Bearer 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' -d '{\"prompt\":\"" prompt "\", \"max_tokens\":" max_tokens "}' https://api.openai.com/v1/engines/davinci/completions";
-#  system(cmd);
-#}
-
 #curl https://api.openai.com/v1/completions \
 #  -H "Content-Type: application/json" \
 #  -H "Authorization: Bearer $OPENAI_API_KEY" \
