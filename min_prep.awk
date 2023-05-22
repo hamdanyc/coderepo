@@ -17,7 +17,10 @@ BEGIN {
   if (!/^[0-9]{2}:[0-9]{2}/) {  # remove time stamp & word < 2
    {
      for (i = 1; i < 16; i++)
-       if ($0 ~ dept[i]) print "\nDept#",toupper(dept[i])
+       if (!seen[dept[i]] && $0 ~ dept[i]){
+	   print "\nDept#",toupper(dept[i])
+           seen[dept[i]] = 1
+       }
        if ($0 ~ /Cef/) print "\nDept#",toupper(dept[4])
    }
    if ($0 != "") print $0

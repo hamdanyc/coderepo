@@ -1,26 +1,44 @@
-#!/bin/awk -f
-
+#!/bin/awk
 BEGIN {
-    # Set the API URL and parameters
-    api_url = "https://example.com/api"
-    api_params = "param1=value1&param2=value2"
-
-    # Retrieve the data using curl and store it in a variable
-    curl_cmd = "curl -s \"" api_url "?" api_params "\""
-    curl_output = system(curl_cmd)
-
-    # Split the output into an array of lines
-    split(curl_output, lines, "\n")
-
-    # Process each line of the output
-    for (i = 1; i <= length(lines); i++) {
-        # Split the line into an array of fields
-        split(lines[i], fields, "\t")
-
-        # Process each field
-        for (j = 1; j <= length(fields); j++) {
-            # Do something with the field
-            print "Field " j " of line " i " is " fields[j]
-        }
-    }
+  max_tokens = 256;
+  FS="\n";
 }
+
+{
+  prompt = $0;
+}
+
+#{
+#   for (line_no=1; line_no<=NF; line_no++) {
+#      prompt=prompt $line_no
+#   }
+#}
+
+END {
+   curl=$(curl)
+   $curl https://api.openai.com/v1/engines/davinci/completions -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $OPENAI_API_KEY" -d '{\"prompt\": \""$prompt\"", \"max_tokens\": "$max_tokens"}'
+   # echo $rs
+   # echo $(echo $result)
+   #echo $(echo $result | jq -r '.choices[0].text')
+}
+
+#END {
+#  cmd = "curl -X POST -H 'Content-Type: application/json' -H 'Authorization: Bearer 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' -d '{\"prompt\":\"" prompt "\", \"max_tokens\":" max_tokens "}' https://api.openai.com/v1/engines/davinci/completions";
+#  system(cmd);
+#}
+
+#curl https://api.openai.com/v1/completions \
+#  -H "Content-Type: application/json" \
+#  -H "Authorization: Bearer $OPENAI_API_KEY" \
+#  -d '{
+#  "model": "text-davinci-003",
+#  "prompt": "Summarize this for a second-grade student:\n\nJupiter is the fifth planet from the Sun and the largest in the Solar System. It is a gas giant with a mass one-thousandth that of the Sun, but two-and-a-half times that of all the other planets in the Solar System combined. Jupiter is one of the brightest objects visible to the naked eye in the night sky, and has been known to ancient civilizations since before recorded history. It is named after the Roman god Jupiter.[19] When viewed from Earth, Jupiter can be bright enough for its reflected light to cast visible shadows,[20] and is on average the third-brightest natural object in the night sky after the Moon and Venus.",
+#  "temperature": 0.7,
+#  "max_tokens": 64,
+#  "top_p": 1.0,
+#  "frequency_penalty": 0.0,
+#  "presence_penalty": 0.0
+#}'
+
+#!/usr/bin/awk -f
+

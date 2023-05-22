@@ -11,7 +11,7 @@ BEGIN {
 }
 {
   rep_with()
-  if ($1 == "#") { # split file at the marker & write
+  if ($1 == "dept#") { # split file at the marker & write
     x = dept[$2]
     next
   }
